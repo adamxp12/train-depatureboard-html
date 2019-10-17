@@ -1,0 +1,49 @@
+@font-face {
+    font-family: dotmatrix;
+    src: url(Dot\ Matrix\ Regular.ttf);
+  }
+  @font-face {
+    font-family: dotmatrix;
+    src: url(Dot\ Matrix\ Bold.ttf);
+    font-weight: bold;
+  }
+
+  body{
+      background: #000;
+      color: yellow;
+      font-family: dotmatrix;
+  }
+
+  .bottom {
+      background: #000;
+      position: fixed;
+      bottom: 0;
+      left:0;
+      right: 0;
+      width: 100%;
+  }
+
+  .depart {
+    font-family: dotmatrix;
+    font-size: 1.5rem;
+  }
+
+  .departs {
+      overflow:hidden;
+  }
+
+  #callat {
+      height: 36px;
+      overflow:hidden;
+  }
+
+  .clocklarge {
+      font-family: dotmatrix;
+      font-weight: bold;
+      font-size: 3rem;
+  }
+
+  .clock {
+    font-family: dotmatrix;
+    font-size: 2rem;
+  }
