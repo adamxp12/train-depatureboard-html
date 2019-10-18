@@ -26,7 +26,8 @@ function updateClock () {
 
 function getData() {
     var request = new XMLHttpRequest()
-    request.open('GET', 'https://transportapi.com/v3/uk/train/station/'+trainconf.station+'/live.json?app_id='+trainconf.appid+'&app_key='+trainconf.appkey+'&darwin=false&train_status=passenger', true)
+    request.open('GET', 'https://huxley.apphb.com/departures/'+trainconf.station+'/?accessToken='+trainconf.accessToken+'&expand=true', true)
+    //request.open('GET', 'https://gist.githubusercontent.com/adamxp12/e07ca1f40f35d5d96a9e09b120668af9/raw/04e75e48b71cc11d8c727bb618b6b50f7fd9c4c7/test.json', true)
     request.onreadystatechange = function () {
         if(request.status != 200) {
             $("#totalstatus").html("api down nuuuu &#128293; &#128557;")
@@ -36,15 +37,14 @@ function getData() {
             addData(this.response);
         };
     };
-
     request.send()
 }
 
 function addData(data2) {
     //var data = getData();
     var data = JSON.parse(data2)
-    stationname = data.station_name;
-    var departures = data.departures.all;
+    stationname = data.locationName;
+    var departures = data.trainServices;
     var departslist = "";
     var i = 0;
     console.log(departures);
@@ -53,17 +53,17 @@ function addData(data2) {
         
         departslist = departslist + '<div class="row depart"> \
         <div class="column shrink"> \
-          '+depart.aimed_arrival_time+' \
+          '+depart.std+' \
         </div> \
         <div class="column" style="height: 36px; overflow:hidden"> \
-          '+depart.destination_name+' \
+          '+depart.destination[0].locationName+' \
         </div> \
         <div class="column shrink"> \
-          '+formatStatus(depart.status, depart)+' \
+          '+formatStatus(depart)+' \
         </div> \
       </div>'
 
-      if(i==0) {
+      if(i==0 && depart.etd != "Cancelled" && depart.etd != "Delayed") {
         departslist = departslist +'<div class="row depart"> \
         <div class="column shrink"> \
         Calling At: \
@@ -73,17 +73,33 @@ function addData(data2) {
       '+formatCallAt(depart)+'\
       </div>\
         </div></div>';
+    } else if (i==0 && depart.etd == "Cancelled") {
+        departslist = departslist +'<div class="row depart"> \
+      <div class="column"> \
+      <div id="callat" class="marquee">\
+      '+depart.cancelReason+'\
+      </div>\
+        </div></div>';
+    } else if (i==0 && depart.etd == "Delayed") {
+        departslist = departslist +'<div class="row depart"> \
+      <div class="column"> \
+      <div id="callat" class="marquee">\
+      '+depart.delayReason+'\
+      </div>\
+        </div></div>';
     }
 
     i++;
 
       $('#departs').html(departslist);
     });
+    startMarquee();
 
 }
 
-function formatStatus(status, depart) {
-    if(status == "ON TIME") return "On Time"
+function formatStatus(depart) {
+    var status = depart.etd;
+    if(status == "On time") return "On Time"
     if(status == "ARRIVED") return "Arrived"
     if(status == "CANCELLED") return "Cancelled"
     if(status == "EARLY") return "On Time"
@@ -92,38 +108,39 @@ function formatStatus(status, depart) {
     if(status == "REINSTATEMENT") return "Reinstatement"
     if(status == "STARTS HERE") return "Starts Here"
 
-    if(status == "LATE") {
-        return "Exp "+depart.expected_arrival_time;
+    if(status.includes(":")) {
+        return "Exp "+depart.etd;
     }
     return status;
 }
 
 function formatCallAt(depart) {
-    var request = new XMLHttpRequest()
-        request.open('GET', depart.service_timetable.id, true)
-        request.onreadystatechange = function () {
-            request.onload = function () {
-                var jtest = JSON.parse(this.response);
-        var stops = jtest.stops;
+        var stops = depart.subsequentCallingPoints;
         var stopsstr = "";
-        var i = 0;
-        stops.forEach(stop => {
-            if(i == (stops.length-1) && stops.length != 1) {
-                stopsstr = stopsstr+ "and " + stop.station_name+" ";
-            } else if (i == stops.length-2) {
-                stopsstr = stopsstr+ stop.station_name+" ";
+        
+        if (stops) {
+            
+            var callpoints = stops[0].callingPoint;
+            var i = 0;
+        callpoints.forEach(stop => {
+            if(i == (callpoints.length-1) && callpoints.length != 1) {
+                stopsstr = stopsstr+ "and " + stop.locationName+" ";
+            } else if (i == callpoints.length-2) {
+                stopsstr = stopsstr+ stop.locationName+" ";
             } else {
-                stopsstr = stopsstr+ stop.station_name+", ";
+                stopsstr = stopsstr+ stop.locationName+", ";
             }
             i++;
-            
         })
-        var stopsstr = stopsstr.substring(stopsstr.indexOf(stationname));
-        $("#callat").html(stopsstr);
-        startMarquee();
-            };
-        };
-        request.send();
+
+        if(depart.length > 1) {
+            stopsstr = stopsstr + "&nbsp;&nbsp;&nbsp;&nbsp; This train is formed of "+depart.length+" coaches."
+        }
+        return stopsstr;
+        }
+        
+        
+        
         return("")        
 
 }

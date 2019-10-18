@@ -1,5 +1,4 @@
 var trainconf={
-    'appid' : 'appid',
-    'appkey' : 'appkey',
-    'station': 'pad'
+    'accessToken' : 'DA1C7740-9DA0-11E4-80E6-A920340000B1',
+    'station': 'hcn'
 }
