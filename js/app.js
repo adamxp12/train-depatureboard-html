@@ -111,30 +111,40 @@ function formatCallAt(depart) {
         var stops = depart.subsequentCallingPoints;
         var stopsstr = "";
         
+        // Platform number if it is in API
+        // the API only gives platform numbers for the next trains to arrive per platform. so unfortunetly cant display platform for all trains
+        // only trains that are next to arrive
+        if(depart.platform && trainconf.showPlatformInMarquee) {
+            stopsstr = stopsstr + "The next train to arrive at platform "+depart.platform+" will be calling at &nbsp;"
+        }
+
+        // Messy code to create the calling at string
         if (stops) {
             
             var callpoints = stops[0].callingPoint;
             var i = 0;
         callpoints.forEach(stop => {
+            var name = stop.locationName
+            if(trainconf.shortenInternational) name = name.replace("International", "Intl");
             if(i == (callpoints.length-1) && callpoints.length != 1) {
-                stopsstr = stopsstr+ "and " + stop.locationName+" ";
+                stopsstr = stopsstr+ "and " + name+" ";
             } else if (i == callpoints.length-2) {
-                stopsstr = stopsstr+ stop.locationName+" ";
+                stopsstr = stopsstr+ name+" ";
             } else {
-                stopsstr = stopsstr+ stop.locationName+", ";
+                stopsstr = stopsstr+ name+", ";
             }
+
             i++;
         })
+        }
 
-        if(depart.length > 1) {
+        // Show coach length
+        if(depart.length > 1 && trainconf.showCoachLength) {
             stopsstr = stopsstr + "&nbsp;&nbsp;&nbsp;&nbsp; This train is formed of "+depart.length+" coaches."
         }
-        return stopsstr;
-        }
-        
-        
-        
-        return("")        
+
+
+        return stopsstr;       
 
 }
 
