@@ -100,13 +100,6 @@ function addData(data2) {
 function formatStatus(depart) {
     var status = depart.etd;
     if(status == "On time") return "On Time"
-    if(status == "ARRIVED") return "Arrived"
-    if(status == "CANCELLED") return "Cancelled"
-    if(status == "EARLY") return "On Time"
-    if(status == "NO REPORT") return "No Data"
-    if(status == "OFF ROUTE") return "Off Route"
-    if(status == "REINSTATEMENT") return "Reinstatement"
-    if(status == "STARTS HERE") return "Starts Here"
 
     if(status.includes(":")) {
         return "Exp "+depart.etd;
