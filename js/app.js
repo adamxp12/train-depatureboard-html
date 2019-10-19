@@ -2,7 +2,8 @@ $(document).foundation()
 
 
 $(document).ready(function() {
-   setInterval("updateClock()", 1000);
+    updateClock();
+   //setInterval("updateClock()", 1000);
    setInterval("getData()", 180000);
    getData();
 });
@@ -16,17 +17,25 @@ function updateClock () {
     var currentHours = currentTime.getHours ( );
     var currentMinutes = currentTime.getMinutes ( );
     var currentSeconds = currentTime.getSeconds ( );
+    var currentDay = currentTime.getDate();
+    var currentMonth = currentTime.getMonth();
+    var currentYear = currentTime.getFullYear();
       
     currentMinutes = ( currentMinutes < 10 ? "0" : "" ) + currentMinutes;
     currentSeconds = ( currentSeconds < 10 ? "0" : "" ) + currentSeconds;
-    var currentTimeString = "<span class='clocklarge'>"+currentHours + ":" + currentMinutes + ":</span>" + currentSeconds;
+    var currentTimeString = "<span class='clocklarge'>"+currentHours + ":" + currentMinutes + ":</span>" + currentSeconds+"<br>";
+    if(trainconf.showDate) currentTimeString = currentTimeString +"<small>"+currentDay+"/"+currentMonth+"/"+currentYear+"</small>";
     $(".clock").html(currentTimeString);
 }
 
 
 function getData() {
     var request = new XMLHttpRequest()
-    request.open('GET', 'https://huxley.apphb.com/departures/'+trainconf.station+'/?accessToken='+trainconf.accessToken+'&expand=true', true)
+    if(trainconf.toStation) {
+        request.open('GET', 'https://huxley.apphb.com/departures/'+trainconf.station+'/to/'+trainconf.toStation+'/?accessToken='+trainconf.accessToken+'&expand=true', true)
+    } else {
+        request.open('GET', 'https://huxley.apphb.com/departures/'+trainconf.station+'/?accessToken='+trainconf.accessToken+'&expand=true', true)
+    }
     //request.open('GET', 'https://gist.githubusercontent.com/adamxp12/e07ca1f40f35d5d96a9e09b120668af9/raw/04e75e48b71cc11d8c727bb618b6b50f7fd9c4c7/test.json', true)
     request.onreadystatechange = function () {
         if(request.status != 200) {

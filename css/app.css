@@ -14,6 +14,11 @@
       font-family: dotmatrix;
   }
 
+  br.small {
+    height: 5px;
+    }
+    
+
   .bottom {
       background: #000;
       position: fixed;
@@ -21,6 +26,9 @@
       left:0;
       right: 0;
       width: 100%;
+      line-height: 30px;
+      padding: 10px 0px;
+      overflow: hidden;
   }
 
   .depart {
@@ -46,4 +54,9 @@
   .clock {
     font-family: dotmatrix;
     font-size: 2rem;
+    margin-bottom: 5px;
   }
+
+  .clock br{
+    line-height: 150%;
+ }
