@@ -44,56 +44,141 @@ function addData(data2) {
     //var data = getData();
     var data = JSON.parse(data2)
     stationname = data.locationName;
-    var departures = data.trainServices;
+    var traindepartures = data.trainServices;
+    var busServices = data.busServices;
     var departslist = "";
     var i = 0;
-    console.log(departures);
 
-    departures.forEach(depart => {
-        
-        departslist = departslist + '<div class="row depart"> \
-        <div class="column shrink"> \
-          '+depart.std+' \
-        </div> \
-        <div class="column" style="height: 36px; overflow:hidden"> \
-          '+depart.destination[0].locationName+' \
-        </div> \
-        <div class="column shrink"> \
-          '+formatStatus(depart)+' \
-        </div> \
-      </div>'
-
-      if(i==0 && depart.etd != "Cancelled" && depart.etd != "Delayed") {
+    if(data.nrccMessages && trainconf.showNrccMessagesMarquee) {
         departslist = departslist +'<div class="row depart"> \
-        <div class="column shrink"> \
-        Calling At: \
-      </div> \
-      <div class="column"> \
-      <div id="callat" class="marquee">\
-      '+formatCallAt(depart)+'\
-      </div>\
-        </div></div>';
-    } else if (i==0 && depart.etd == "Cancelled") {
-        departslist = departslist +'<div class="row depart"> \
-      <div class="column"> \
-      <div id="callat" class="marquee">\
-      '+depart.cancelReason+'\
-      </div>\
-        </div></div>';
-    } else if (i==0 && depart.etd == "Delayed") {
-        departslist = departslist +'<div class="row depart"> \
-      <div class="column"> \
-      <div id="callat" class="marquee">\
-      '+depart.delayReason+'\
-      </div>\
-        </div></div>';
+          <div class="column"> \
+          <div id="callat" class="marquee">\
+          '+data.nrccMessages[0].value.replace(/<\/?[^>]+(>|$)/g, "")+'\
+          </div>\
+            </div></div>';
+            $('#departs').html(departslist);
+            startMarquee();
     }
 
-    i++;
+    if(traindepartures != null) {
+        traindepartures.forEach(depart => {
+        
+            departslist = departslist + '<div class="row depart"> \
+            <div class="column shrink"> \
+              '+depart.std+' \
+            </div> \
+            <div class="column" style="height: 36px; overflow:hidden"> \
+              '+depart.destination[0].locationName+' \
+            </div> \
+            <div class="column shrink"> \
+              '+formatStatus(depart)+' \
+            </div> \
+          </div>'
+    
+          if(i==0 && depart.etd != "Cancelled" && depart.etd != "Delayed") {
+            departslist = departslist +'<div class="row depart"> \
+            <div class="column shrink"> \
+            Calling At: \
+          </div> \
+          <div class="column"> \
+          <div id="callat" class="marquee">\
+          '+formatCallAt(depart, false)+'\
+          </div>\
+            </div></div>';
+        } else if (i==0 && depart.etd == "Cancelled") {
+            departslist = departslist +'<div class="row depart"> \
+          <div class="column"> \
+          <div id="callat" class="marquee">\
+          '+depart.cancelReason+'\
+          </div>\
+            </div></div>';
+        } else if (i==0 && depart.etd == "Delayed") {
+            departslist = departslist +'<div class="row depart"> \
+          <div class="column"> \
+          <div id="callat" class="marquee">\
+          '+depart.delayReason+'\
+          </div>\
+            </div></div>';
+        }
+    
+        i++;
+    
+          $('#departs').html(departslist);
+        });
+        startMarquee();
+    } 
+    if(busServices !=null) {
+        if(trainconf.alwaysShowBusses || traindepartures == null) {
+            busServices.forEach(depart => {
+        
+                departslist = departslist + '<div class="row depart"> \
+                <div class="column shrink"> \
+                  '+depart.std+' \
+                </div> \
+                <div class="column" style="height: 36px; overflow:hidden"> \
+                  '+depart.destination[0].locationName+' \
+                </div> \
+                <div class="column shrink"> \
+                  '+formatStatus(depart)+' \
+                </div> \
+              </div>'
+        
+              if(i==0 && depart.etd != "Cancelled" && depart.etd != "Delayed") {
+                departslist = departslist +'<div class="row depart"> \
+                <div class="column shrink"> \
+                Calling At: \
+              </div> \
+              <div class="column"> \
+              <div id="callat" class="marquee">\
+              '+formatCallAt(depart, true)+'\
+              </div>\
+                </div></div>';
+            } else if (i==0 && depart.etd == "Cancelled") {
+                departslist = departslist +'<div class="row depart"> \
+              <div class="column"> \
+              <div id="callat" class="marquee">\
+              '+depart.cancelReason+'\
+              </div>\
+                </div></div>';
+            } else if (i==0 && depart.etd == "Delayed") {
+                departslist = departslist +'<div class="row depart"> \
+              <div class="column"> \
+              <div id="callat" class="marquee">\
+              '+depart.delayReason+'\
+              </div>\
+                </div></div>';
+            }
+        
+            i++;
+        
+              $('#departs').html(departslist);
+            });
+            startMarquee();
+        }
+    }
+        
+    if(stationname !=null && traindepartures == null && busServices == null) {
+        departslist = departslist + '<div class="row depart"> \
+            <div class="column text-center"> \
+              Welcome to \
+            </div></div><div class="row depart">  \
+            <div class="column text-center"> \
+              <b>'+stationname+'</b> \
+            </div></div>\
+            <div class="row depart">  \
+            <div class="column text-center"> \
+              <b>&nbsp;</b> \
+            </div></div>\
+            <div class="row depart">  \
+            <div class="column text-center"> \
+              The are currently no trains scheduled \
+            </div></div>';
+            $('#departs').html(departslist);
+    } else {
+        // API down probs
+    }
 
-      $('#departs').html(departslist);
-    });
-    startMarquee();
+    
 
 }
 
@@ -107,7 +192,7 @@ function formatStatus(depart) {
     return status;
 }
 
-function formatCallAt(depart) {
+function formatCallAt(depart, isBus) {
         var stops = depart.subsequentCallingPoints;
         var stopsstr = "";
         
@@ -115,7 +200,11 @@ function formatCallAt(depart) {
         // the API only gives platform numbers for the next trains to arrive per platform. so unfortunetly cant display platform for all trains
         // only trains that are next to arrive
         if(depart.platform && trainconf.showPlatformInMarquee) {
-            stopsstr = stopsstr + "The next train to arrive at platform "+depart.platform+" will be calling at &nbsp;"
+            if(depart.platform == "BUS" || isBus) {
+                stopsstr = stopsstr + "This service is a bus replacement. &nbsp; Calling at &nbsp;"
+            } else {
+                stopsstr = stopsstr + "The next train to arrive at platform "+depart.platform+" will be calling at &nbsp;"
+            }
         }
 
         // Messy code to create the calling at string

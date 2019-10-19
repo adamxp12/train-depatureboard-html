@@ -3,5 +3,7 @@ var trainconf={
     'station': 'hcn',
     'showPlatformInMarquee': true,
     'showCoachLength': true,
-    'shortenInternational': true
+    'shortenInternational': true,
+    'alwaysShowBusses': true,
+    'showNrccMessagesMarquee': true
 }
