@@ -2,8 +2,7 @@ $(document).foundation()
 
 
 $(document).ready(function() {
-    updateClock();
-   //setInterval("updateClock()", 1000);
+   setInterval("updateClock()", 1000);
    setInterval("getData()", 180000);
    getData();
 });
@@ -57,7 +56,6 @@ function addData(data2) {
     var busServices = data.busServices;
     var departslist = "";
     var i = 0;
-
     if(data.nrccMessages && trainconf.showNrccMessagesMarquee) {
         departslist = departslist +'<div class="row depart"> \
           <div class="column"> \
