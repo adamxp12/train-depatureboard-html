@@ -78,7 +78,7 @@ function addData(data2) {
               '+depart.destination[0].locationName+' \
             </div> \
             <div class="column shrink"> \
-              '+formatStatus(depart)+' \
+              '+formatStatus(depart)+'&nbsp; \
             </div> \
           </div>'
     
@@ -126,7 +126,7 @@ function addData(data2) {
                   '+depart.destination[0].locationName+' \
                 </div> \
                 <div class="column shrink"> \
-                  '+formatStatus(depart)+' \
+                  '+formatStatus(depart)+'&nbsp; \
                 </div> \
               </div>'
         
@@ -181,6 +181,7 @@ function addData(data2) {
               The are currently no trains scheduled \
             </div></div>';
             $('#departs').html(departslist);
+            startMarquee();
     } else {
         // API down probs
     }
