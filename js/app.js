@@ -64,7 +64,6 @@ function addData(data2) {
           </div>\
             </div></div>';
             $('#departs').html(departslist);
-            startMarquee();
     }
 
     if(traindepartures != null) {
@@ -112,7 +111,6 @@ function addData(data2) {
     
           $('#departs').html(departslist);
         });
-        startMarquee();
     } 
     if(busServices !=null) {
         if(trainconf.alwaysShowBusses || traindepartures == null) {
@@ -181,10 +179,10 @@ function addData(data2) {
               The are currently no trains scheduled \
             </div></div>';
             $('#departs').html(departslist);
-            startMarquee();
     } else {
         // API down probs
     }
+    startMarquee();
 
     
 
