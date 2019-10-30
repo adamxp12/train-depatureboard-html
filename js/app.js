@@ -2,7 +2,12 @@ $(document).foundation()
 
 
 $(document).ready(function() {
-   setInterval("updateClock()", 1000);
+  if(trainconf.showSecondsClock) {
+    setInterval("updateClock()", 1000);
+  } else {
+    setInterval("updateClock()", 10000);
+  }
+   
    setInterval("getData()", 180000);
    getData();
 });
@@ -21,10 +26,16 @@ function updateClock () {
     var currentYear = currentTime.getFullYear();
       
     currentMinutes = ( currentMinutes < 10 ? "0" : "" ) + currentMinutes;
-    currentSeconds = ( currentSeconds < 10 ? "0" : "" ) + currentSeconds;
-    var currentTimeString = "<span class='clocklarge'>"+currentHours + ":" + currentMinutes + ":</span>" + currentSeconds+"<br>";
+    if(trainconf.showSecondsClock) {
+      currentSeconds = ( currentSeconds < 10 ? "0" : "" ) + currentSeconds;
+      var currentTimeString = "<span class='clocklarge'>"+currentHours + ":" + currentMinutes + ":</span>" + currentSeconds+"<br>";
+    } else {
+      currentSeconds = "";
+      var currentTimeString = "<span class='clocklarge'>"+currentHours + ":" + currentMinutes + "<br>";
+    }
     if(trainconf.showDate) currentTimeString = currentTimeString +"<small>"+currentDay+"/"+currentMonth+"/"+currentYear+"</small>";
-    $(".clock").html(currentTimeString);
+    //$(".clock").html(currentTimeString);
+    document.getElementById("clock").innerHTML = currentTimeString;
 }
 
 
