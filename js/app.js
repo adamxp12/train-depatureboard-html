@@ -34,6 +34,13 @@ function updateClock () {
       var currentTimeString = "<span class='clocklarge'>"+currentHours + ":" + currentMinutes + "<br>";
     }
     if(trainconf.showDate) currentTimeString = currentTimeString +"<small>"+currentDay+"/"+currentMonth+"/"+currentYear+"</small>";
+    
+    currentHours = null;
+    currentMinutes = null;
+    currentSeconds = null;
+    currentDay = null;
+    currentMonth = null;
+    currentYear
     //$(".clock").html(currentTimeString);
     document.getElementById("clock").innerHTML = currentTimeString;
 }
@@ -194,7 +201,10 @@ function addData(data2) {
         // API down probs
     }
     startMarquee();
-
+    data = null;
+    traindepartures = null;
+    busServices = null;
+    departslist = null;
     
 
 }
@@ -249,7 +259,7 @@ function formatCallAt(depart, isBus) {
             stopsstr = stopsstr + "&nbsp;&nbsp;&nbsp;&nbsp; This train is formed of "+depart.length+" coaches."
         }
 
-
+        stops = null;
         return stopsstr;       
 
 }
