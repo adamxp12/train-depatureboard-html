@@ -5,6 +5,7 @@ var trainconf={
     'toStation': null,
     'showDate': false,
     'showPlatformInMarquee': true,
+    'waitForMarquee': true,
     'showCoachLength': true,
     'shortenInternational': true,
     'alwaysShowBusses': true,

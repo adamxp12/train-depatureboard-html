@@ -60,8 +60,12 @@ function getData() {
         }
 
         request.onload = function () {
-            stopMarquee();
-            addData(this.response);
+          var response = this.response;
+            stopMarquee(function() {
+              addData(response);
+              response = null;
+            });
+            
         };
     };
     request.send()
@@ -266,8 +270,17 @@ function formatCallAt(depart, isBus) {
 }
 
 
-function stopMarquee() {
-  $('.marquee').marquee('destroy');
+function stopMarquee(callback) {
+  if($('.marquee').length > 0 && trainconf.waitForMarquee){
+      $('.marquee')
+	    .bind('finished', function(){
+          $(this).marquee('destroy');
+          callback();
+      })
+    } else {
+      callback();
+    }
+ // $('.marquee').marquee('destroy');
 }
 
 
