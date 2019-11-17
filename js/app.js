@@ -60,6 +60,7 @@ function getData() {
         }
 
         request.onload = function () {
+            stopMarquee();
             addData(this.response);
         };
     };
@@ -263,6 +264,12 @@ function formatCallAt(depart, isBus) {
         return stopsstr;       
 
 }
+
+
+function stopMarquee() {
+  $('.marquee').marquee('destroy');
+}
+
 
 function startMarquee() {
     $('.marquee').marquee({
