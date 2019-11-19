@@ -8,7 +8,7 @@ $(document).ready(function() {
     setInterval("updateClock()", 10000);
   }
    
-   setInterval("getData()", 180000);
+   setInterval("getData()", trainconf.updateInterval*1000);
    getData();
 });
 
@@ -125,7 +125,7 @@ function addData(data2) {
             departslist = departslist +'<div class="row depart"> \
           <div class="column"> \
           <div id="callat" class="marquee">\
-          '+depart.delayReason+'\
+          '+depart.delayReason+" - "+formatCallAt(depart, false)+'\
           </div>\
             </div></div>';
         }
@@ -172,7 +172,7 @@ function addData(data2) {
                 departslist = departslist +'<div class="row depart"> \
               <div class="column"> \
               <div id="callat" class="marquee">\
-              '+depart.delayReason+'\
+              '+depart.delayReason+" - "+formatCallAt(depart, true)+'\
               </div>\
                 </div></div>';
             }
