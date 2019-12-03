@@ -1,7 +1,8 @@
 $(document).foundation()
-var version = "1.0.0"
+var version = "1.0.1"
 
 $(document).ready(function() {
+  $('html').css("font-size", trainconf.fontSize);
   if(trainconf.showSecondsClock) {
     setInterval("updateClock()", 1000);
   } else {
@@ -108,7 +109,7 @@ function addData(data2) {
             <div class="column shrink"> \
               '+depart.std+' \
             </div> \
-            <div class="column" style="height: 36px; overflow:hidden"> \
+            <div class="column" style="overflow:hidden"> \
               '+depart.destination[0].locationName+' \
             </div> \
             <div class="column shrink"> \
@@ -155,7 +156,7 @@ function addData(data2) {
                 <div class="column shrink"> \
                   '+depart.std+' \
                 </div> \
-                <div class="column" style="height: 36px; overflow:hidden"> \
+                <div class="column" style="overflow:hidden"> \
                   '+depart.destination[0].locationName+' \
                 </div> \
                 <div class="column shrink"> \
