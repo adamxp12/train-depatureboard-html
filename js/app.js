@@ -12,7 +12,13 @@ $(document).ready(function() {
    getData();
 });
 
+
+$( "#clock" ).click(function() {
+  window.location.reload(false); 
+});
+
 var stationname = "";
+
 
 
 function updateClock () {
@@ -268,6 +274,7 @@ function formatCallAt(depart, isBus) {
         return stopsstr;       
 
 }
+
 
 
 function stopMarquee(callback) {
