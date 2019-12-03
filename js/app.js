@@ -1,5 +1,5 @@
 $(document).foundation()
-
+var version = "1.0.0"
 
 $(document).ready(function() {
   if(trainconf.showSecondsClock) {
@@ -7,9 +7,15 @@ $(document).ready(function() {
   } else {
     setInterval("updateClock()", 10000);
   }
-   
-   setInterval("getData()", trainconf.updateInterval*1000);
-   getData();
+  
+  document.getElementById("ver").innerHTML = "train-depatureboard-html " + version;
+
+   setTimeout(function() {
+    setInterval("getData()", trainconf.updateInterval*1000);
+    getData();
+   }, 5000)
+   //setInterval("getData()", trainconf.updateInterval*1000);
+   //getData();
 });
 
 
