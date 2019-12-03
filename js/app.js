@@ -40,10 +40,10 @@ function updateClock () {
     currentMinutes = ( currentMinutes < 10 ? "0" : "" ) + currentMinutes;
     if(trainconf.showSecondsClock) {
       currentSeconds = ( currentSeconds < 10 ? "0" : "" ) + currentSeconds;
-      var currentTimeString = "<span class='clocklarge'>"+currentHours + ":" + currentMinutes + ":</span>" + currentSeconds+"<br>";
+      var currentTimeString = "<span class='clocklarge'>"+currentHours + ":" + currentMinutes + ":</span>" + currentSeconds+" ";
     } else {
       currentSeconds = "";
-      var currentTimeString = "<span class='clocklarge'>"+currentHours + ":" + currentMinutes + "<br>";
+      var currentTimeString = "<span class='clocklarge'>"+currentHours + ":" + currentMinutes + "</span>";
     }
     if(trainconf.showDate) currentTimeString = currentTimeString +"<small>"+currentDay+"/"+currentMonth+"/"+currentYear+"</small>";
     
