@@ -5,4 +5,8 @@ Originally developed as a gift idea for my boyfriend who loves trains. He saw a 
 
 Thus I started work on this. its got simple goals. a responsive version of that python code. sure it wont ever work on a "cheap" OLED screen. but it sure does work on one of them cheap 3.5" Waveshare LCD's that just snap onto the raspberry PI. you can buy them for £10 with a case. add a raspberry PI and boom. instantly on a winner. and unlike the OLED screens this is no doubt going to last much longer. as OLED displays are prone to burn in and simply dont last as long as a plain old TFT.
 
-This code is provided as is. Simply edit the js/config.js file to suit your needs. It does have some flaws. namely the clock seems to cause the thing to drop frames on my Raspberry Pi 2 B+ it not terrible but its not smooth which is sad. the is a config to disable the seconds part of the clock which will make it much smoother but you loose the seconds display. Need to do some testing on a faster Raspberry Pi 3 to see if its something that can be fixed or not. Open to pull requests here
+This code is provided as is. Simply edit/copy config.js.example to js/config.js file to suit your needs.
+
+I recomend for the best smoothness you use either a HDMI display or the MHS 3.5" display they can run up to 125Mhz 60fps smooth as butter and dont use unsightly HDMI connectors so can be installed into a case. the cheap 3.5" LCD's can only muster about 21mhz without breaking. 62mhz seems to work but it causes iffy colours. spend the extra money for best results. In therory it will work with the offical raspberry PI LCD though you might need to adust the resolution/size for the bigger screen
+
+You will need an API key from [National Rail](http://realtime.nationalrail.co.uk/OpenLDBWSRegistration)
