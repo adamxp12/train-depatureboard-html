@@ -104,99 +104,19 @@ function addData(data2) {
 
     if(traindepartures != null) {
         traindepartures.forEach(depart => {
-        
-            departslist = departslist + '<div class="row depart"> \
-            <div class="column shrink"> \
-              '+depart.std+' \
-            </div> \
-            <div class="column" style="overflow:hidden"> \
-              '+depart.destination[0].locationName+' \
-            </div> \
-            <div class="column shrink"> \
-              '+formatStatus(depart)+'&nbsp; \
-            </div> \
-          </div>'
-    
-          if(i==0 && depart.etd != "Cancelled" && depart.etd != "Delayed") {
-            departslist = departslist +'<div class="row depart"> \
-            <div class="column shrink"> \
-            Calling At: \
-          </div> \
-          <div class="column"> \
-          <div id="callat" class="marquee">\
-          '+formatCallAt(depart, false)+'\
-          </div>\
-            </div></div>';
-        } else if (i==0 && depart.etd == "Cancelled") {
-            departslist = departslist +'<div class="row depart"> \
-          <div class="column"> \
-          <div id="callat" class="marquee">\
-          '+depart.cancelReason+'\
-          </div>\
-            </div></div>';
-        } else if (i==0 && depart.etd == "Delayed") {
-          var delayreason = depart.delayReason || "This train has been delayed";
-            departslist = departslist +'<div class="row depart"> \
-          <div class="column"> \
-          <div id="callat" class="marquee">\
-          '+delayreason+" - "+formatCallAt(depart, false)+'\
-          </div>\
-            </div></div>';
-        }
-    
-        i++;
-    
-          $('#departs').html(departslist);
+            departslist = makeDepartList(i, depart, departslist, false);
+            i++;
+            $('#departs').html(departslist);
         });
     } 
     if(busServices !=null) {
         if(trainconf.alwaysShowBusses || traindepartures == null) {
             busServices.forEach(depart => {
-        
-                departslist = departslist + '<div class="row depart"> \
-                <div class="column shrink"> \
-                  '+depart.std+' \
-                </div> \
-                <div class="column" style="overflow:hidden"> \
-                  '+depart.destination[0].locationName+' \
-                </div> \
-                <div class="column shrink"> \
-                  '+formatStatus(depart)+'&nbsp; \
-                </div> \
-              </div>'
-        
-              if(i==0 && depart.etd != "Cancelled" && depart.etd != "Delayed") {
-                departslist = departslist +'<div class="row depart"> \
-                <div class="column shrink"> \
-                Calling At: \
-              </div> \
-              <div class="column"> \
-              <div id="callat" class="marquee">\
-              '+formatCallAt(depart, true)+'\
-              </div>\
-                </div></div>';
-            } else if (i==0 && depart.etd == "Cancelled") {
-                departslist = departslist +'<div class="row depart"> \
-              <div class="column"> \
-              <div id="callat" class="marquee">\
-              '+depart.cancelReason+'\
-              </div>\
-                </div></div>';
-            } else if (i==0 && depart.etd == "Delayed") {
-              var delayreason = depart.delayReason || "This bus has been delayed ";
-                departslist = departslist +'<div class="row depart"> \
-              <div class="column"> \
-              <div id="callat" class="marquee">\
-              '+delayreason+" - "+formatCallAt(depart, true)+'\
-              </div>\
-                </div></div>';
-            }
-        
-            i++;
-        
+              departslist = makeDepartList(i, depart, departslist, false);
+              i++;
               $('#departs').html(departslist);
             });
-            startMarquee();
+            
         }
     }
         
@@ -227,6 +147,50 @@ function addData(data2) {
     departslist = null;
     
 
+}
+
+function makeDepartList(i, depart, departslist, isBus) {
+  departslist = departslist + '<div class="row depart"> \
+                <div class="column shrink"> \
+                  '+depart.std+' \
+                </div> \
+                <div class="column" style="overflow:hidden"> \
+                  '+depart.destination[0].locationName+' \
+                </div> \
+                <div class="column shrink"> \
+                  '+formatStatus(depart)+'&nbsp; \
+                </div> \
+              </div>'
+        
+              if(i==0 && depart.etd != "Cancelled" && depart.etd != "Delayed") {
+                departslist = departslist +'<div class="row depart"> \
+                <div class="column shrink"> \
+                Calling At: \
+              </div> \
+              <div class="column"> \
+              <div id="callat" class="marquee">\
+              '+formatCallAt(depart, isBus)+'\
+              </div>\
+                </div></div>';
+            } else if (i==0 && depart.etd == "Cancelled") {
+                departslist = departslist +'<div class="row depart"> \
+              <div class="column"> \
+              <div id="callat" class="marquee">\
+              '+depart.cancelReason+'\
+              </div>\
+                </div></div>';
+            } else if (i==0 && depart.etd == "Delayed") {
+              var delayreason = depart.delayReason || "This bus has been delayed ";
+                departslist = departslist +'<div class="row depart"> \
+              <div class="column"> \
+              <div id="callat" class="marquee">\
+              '+delayreason+" - "+formatCallAt(depart, true)+'\
+              </div>\
+                </div></div>';
+            }
+        
+            i++;   
+            return departslist;           
 }
 
 function formatStatus(depart) {
