@@ -57,10 +57,11 @@ function updateClock () {
 
 function getData() {
     var request = new XMLHttpRequest()
+    var apiUrl = trainconf.apiUrl || "https://huxley.apphb.com";
     if(trainconf.toStation) {
-        request.open('GET', 'https://huxley.apphb.com/departures/'+trainconf.station+'/to/'+trainconf.toStation+'/?accessToken='+trainconf.accessToken+'&expand=true', true)
+        request.open('GET', apiUrl+'/departures/'+trainconf.station+'/to/'+trainconf.toStation+'/?accessToken='+trainconf.accessToken+'&expand=true', true)
     } else {
-        request.open('GET', 'https://huxley.apphb.com/departures/'+trainconf.station+'/?accessToken='+trainconf.accessToken+'&expand=true', true)
+        request.open('GET', apiUrl+'/departures/'+trainconf.station+'/?accessToken='+trainconf.accessToken+'&expand=true', true)
     }
     //request.open('GET', 'https://gist.githubusercontent.com/adamxp12/e07ca1f40f35d5d96a9e09b120668af9/raw/04e75e48b71cc11d8c727bb618b6b50f7fd9c4c7/test.json', true)
     request.onreadystatechange = function () {
@@ -81,7 +82,6 @@ function getData() {
 }
 
 function addData(data2) {
-    //var data = getData();
     var data = JSON.parse(data2)
     stationname = data.locationName;
     var traindepartures = data.trainServices;
