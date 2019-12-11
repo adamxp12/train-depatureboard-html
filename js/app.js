@@ -86,13 +86,27 @@ function addData(data2) {
     stationname = data.locationName;
     var traindepartures = data.trainServices;
     var busServices = data.busServices;
+    var nrccMessages = data.nrccMessages;
     var departslist = "";
     var i = 0;
     if(data.nrccMessages && trainconf.showNrccMessagesMarquee) {
+      var nrccmsgs = "";
+      var ii = 0;
+        nrccMessages.forEach(nrcc => {
+          if(ii != nrccMessages.length-1 && nrccMessages.length > 1) {
+            nrccmsgs = nrccmsgs + nrcc.value +" - ";
+          } else {
+            nrccmsgs = nrccmsgs + nrcc.value +" ";
+          }
+          
+          ii++;
+        })
+        ii = null;
+
         departslist = departslist +'<div class="row depart"> \
           <div class="column"> \
           <div id="callat" class="marquee">\
-          '+data.nrccMessages[0].value.replace(/<\/?[^>]+(>|$)/g, "")+'\
+          '+nrccmsgs.replace(/<\/?[^>]+(>|$)/g, "")+'\
           </div>\
             </div></div>';
             $('#departs').html(departslist);
