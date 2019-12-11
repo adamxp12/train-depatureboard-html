@@ -135,10 +135,11 @@ function addData(data2) {
           </div>\
             </div></div>';
         } else if (i==0 && depart.etd == "Delayed") {
+          var delayreason = depart.delayReason || "This train has been delayed";
             departslist = departslist +'<div class="row depart"> \
           <div class="column"> \
           <div id="callat" class="marquee">\
-          '+depart.delayReason+" - "+formatCallAt(depart, false)+'\
+          '+delayreason+" - "+formatCallAt(depart, false)+'\
           </div>\
             </div></div>';
         }
@@ -182,10 +183,11 @@ function addData(data2) {
               </div>\
                 </div></div>';
             } else if (i==0 && depart.etd == "Delayed") {
+              var delayreason = depart.delayReason || "This bus has been delayed ";
                 departslist = departslist +'<div class="row depart"> \
               <div class="column"> \
               <div id="callat" class="marquee">\
-              '+depart.delayReason+" - "+formatCallAt(depart, true)+'\
+              '+delayreason+" - "+formatCallAt(depart, true)+'\
               </div>\
                 </div></div>';
             }
