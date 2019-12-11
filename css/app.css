@@ -47,6 +47,8 @@
   #callat {
       height: 2.25rem;
       overflow:hidden;
+      transition: padding-top 0.5s;
+      padding-top: 2.25rem;
   }
 
   .clocklarge {

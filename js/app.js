@@ -292,26 +292,24 @@ function stopMarquee(callback) {
       $('.marquee')
 	    .bind('finished', function(){
           $(this).marquee('destroy');
+          $('.marquee').css("padding-top", "2.25rem");
           callback();
       })
     } else {
       callback();
     }
- // $('.marquee').marquee('destroy');
 }
 
 
 function startMarquee() {
+    
     $('.marquee').marquee({
-        //duration in milliseconds of the marquee
         speed: 50,
-        //gap in pixels between the tickers
         gap: 50,
-        //time in milliseconds before the marquee will start animating
-        delayBeforeStart: 0,
-        //'left' or 'right'
+        startVisible: true,
+        delayBeforeStart: 200 0,
         direction: 'left',
-        //true or false - should the marquee be duplicated to show an effect of continues flow
         duplicated: false
     });
+    $('.marquee').css("padding-top", "0px");
 }
