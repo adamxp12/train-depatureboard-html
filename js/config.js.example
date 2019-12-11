@@ -8,6 +8,7 @@ var trainconf={
     'showDate': false,
     'showPlatformInMarquee': true,
     'waitForMarquee': true,
+    'showArrivalTimes': false,
     'showCoachLength': true,
     'shortenInternational': true,
     'alwaysShowBusses': true,

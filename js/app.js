@@ -259,6 +259,7 @@ function formatCallAt(depart, isBus) {
             var i = 0;
         callpoints.forEach(stop => {
             var name = stop.locationName
+            if(trainconf.showArrivalTimes && stop.st) { name = name + " ("+stop.st+")"}
             if(trainconf.shortenInternational) name = name.replace("International", "Intl");
             if(i == (callpoints.length-1) && callpoints.length != 1) {
                 stopsstr = stopsstr+ "and " + name+" ";
