@@ -307,7 +307,7 @@ function startMarquee() {
         speed: 50,
         gap: 50,
         startVisible: true,
-        delayBeforeStart: 200 0,
+        delayBeforeStart: 2000,
         direction: 'left',
         duplicated: false
     });
