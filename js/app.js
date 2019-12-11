@@ -15,8 +15,6 @@ $(document).ready(function() {
     setInterval("getData()", trainconf.updateInterval*1000);
     getData();
    }, 5000)
-   //setInterval("getData()", trainconf.updateInterval*1000);
-   //getData();
 });
 
 
@@ -25,8 +23,6 @@ $( "#clock" ).click(function() {
 });
 
 var stationname = "";
-
-
 
 function updateClock () {
     var currentTime = new Date ( );
@@ -69,7 +65,7 @@ function getData() {
     //request.open('GET', 'https://gist.githubusercontent.com/adamxp12/e07ca1f40f35d5d96a9e09b120668af9/raw/04e75e48b71cc11d8c727bb618b6b50f7fd9c4c7/test.json', true)
     request.onreadystatechange = function () {
         if(request.status != 200) {
-            $("#totalstatus").html("api down nuuuu &#128293; &#128557;")
+            $("#loading").html("api issue nuuuu &#128293; &#128557;")
         }
 
         request.onload = function () {
